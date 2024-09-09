@@ -1,13 +1,18 @@
 "use client";
 import React, { useState } from "react";
 import Card from "@/components/Card";
-import { Input } from "@/components/ui/input";
-import Image from "next/image";
-import { saveEmail } from "@/lib/powerhouse";
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+//import { saveotp } from "@/lib/powerhouse";
 import { useToast } from "@/hooks/use-toast";
 
 const AdminContainer = () => {
-  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
@@ -15,14 +20,14 @@ const AdminContainer = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!email) {
-      setError("Email is required");
+    if (!otp) {
+      setError("otp is required");
       return;
     }
 
     setLoading(true);
-    try {
-      const res = await saveEmail(email);
+    /*try {
+      const res = await saveotp(otp);
       if (res.status === 200) {
         toast({
           title: "Thank you! Your submission has been received.",
@@ -32,7 +37,7 @@ const AdminContainer = () => {
       } else {
         toast({
           variant: "destructive",
-          title: "Email already exist",
+          title: "otp already exist",
         });
         setLoading(false);
         setError("");
@@ -45,46 +50,50 @@ const AdminContainer = () => {
       });
       setLoading(false);
       setError("");
-    }
+    }*/
   };
 
   return (
     <form onSubmit={handleSubmit}>
       {" "}
       {/* Form submission handler */}
-      <Card type="email" loading={loading}>
+      <Card type="otp" loading={loading}>
         <div>
-          <h2 className="md:text-4xl text-2xl font-semibold max-w-[80%] mb-3">
-            Unlock 🔓 Exclusive Deals and Updates!
+          <h2 className="md:text-2xl text-lg font-semibold max-w-[80%] mb-3">
+            Verify OTP
           </h2>
           <p className="text-[#B4C6EE] text-xs md:text-sm max-w-[90%] font-light">
-            Sign up now to be the first to know about our latest products and
-            receive special discounts directly in your inbox.
+            Please enter the OTP to login to the admin dashboard.
           </p>
-          <div className="py-10 grid gap-2">
-            <label
-              htmlFor="email"
-              className="text-xs md:text-sm font-light pl-2 text-[#B4C6EE]"
-            >
-              Enter Email
-            </label>
-            <div className="relative">
-              <Input
-                type="email"
-                id="email"
-                placeholder="emmy@gmail.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-[#27344D] pl-12 focus:border-[#3371FF] placeholder:text-xs text-xs md:text-sm md:placeholder:text-sm placeholder:font-light placeholder:opacity-70 border-[#2E3D5B] h-[52px] rounded-[8px]"
-              />
-              <Image
-                src="/icons/email.svg"
-                width={20}
-                height={30}
-                alt="email icon"
-                className="absolute top-[50%] translate-y-[-50%] left-3"
-              />
-            </div>
+          <div className="py-10">
+            <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
+              <InputOTPGroup className="min-w-full gap-2 justify-evenly">
+                <InputOTPSlot
+                  index={0}
+                  className="bg-[#27344D] md:w-14 md:h-14 w-full max-w-14 h-12 text-lg font-semibold border border-[#3371FF] rounded-[8px]"
+                />
+                <InputOTPSlot
+                  index={1}
+                  className="bg-[#27344D] md:w-14 md:h-14 w-full max-w-14 h-12 text-lg font-semibold border border-[#3371FF] rounded-[8px]"
+                />
+                <InputOTPSlot
+                  index={2}
+                  className="bg-[#27344D] md:w-14 md:h-14 w-full max-w-14 h-12 text-lg font-semibold border border-[#3371FF] rounded-[8px]"
+                />
+                <InputOTPSlot
+                  index={3}
+                  className="bg-[#27344D] md:w-14 md:h-14 w-full max-w-14 h-12 text-lg font-semibold border border-[#3371FF] rounded-[8px]"
+                />
+                <InputOTPSlot
+                  index={4}
+                  className="bg-[#27344D] md:w-14 md:h-14 w-full max-w-14 h-12 text-lg font-semibold border border-[#3371FF] rounded-[8px]"
+                />
+                <InputOTPSlot
+                  index={5}
+                  className="bg-[#27344D] md:w-14 md:h-14 w-full max-w-14 h-12 text-lg font-semibold border border-[#3371FF] rounded-[8px]"
+                />
+              </InputOTPGroup>
+            </InputOTP>
             {error && (
               <p className="text-red-500 text-xs font-light pl-2 md:text-sm">
                 {error}

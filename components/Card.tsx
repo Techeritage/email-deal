@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 const Card = ({
   children,
@@ -12,7 +13,14 @@ const Card = ({
   loading: boolean;
 }) => {
   return (
-    <div className="border px-[3%] md:px-[5%] py-10 custom-shadows border-[#2B3B5A]/70 bg-[#151E2F]/95 mx-auto max-w-[90%] md:max-w-[500px] rounded-[10px] shadow-md">
+    <div
+      className={cn(
+        "border px-[3%] md:px-[5%] py-10 custom-shadows border-[#2B3B5A]/70 bg-[#151E2F]/95 mx-auto max-w-[90%] md:max-w-[500px] rounded-[10px] shadow-md",
+        {
+          "md:min-w-[500px] w-[100vw]": type === "otp",
+        }
+      )}
+    >
       {children}
       <Button
         disabled={loading}
