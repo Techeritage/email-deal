@@ -10,7 +10,7 @@ const HomeContainer = () => {
       <Card onClick={handleSubmit} type="email">
         <div>
           <h2 className="md:text-4xl text-2xl font-semibold max-w-[80%] mb-3">
-            Unlock Exclusive Deals and Updates!
+            Unlock 🔓 Exclusive Deals and Updates!
           </h2>
           <p className="text-[#B4C6EE] text-xs md:text-sm max-w-[90%] font-light">
             Sign up now to be the first to know about our latest products and
