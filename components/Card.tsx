@@ -8,7 +8,7 @@ const Card = ({
   type,
 }: {
   children: React.ReactNode;
-  onClick: (e: any) => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   type: "email" | "otp";
 }) => {
   return (
