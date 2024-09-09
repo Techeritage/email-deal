@@ -6,7 +6,7 @@ import Image from "next/image";
 import { saveEmail } from "@/lib/powerhouse";
 import { useToast } from "@/hooks/use-toast";
 
-const HomeContainer = () => {
+const AdminContainer = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,7 +29,6 @@ const HomeContainer = () => {
         });
         setLoading(false);
         setError("");
-        setEmail("");
       } else {
         toast({
           variant: "destructive",
@@ -98,4 +97,4 @@ const HomeContainer = () => {
   );
 };
 
-export default HomeContainer;
+export default AdminContainer;

@@ -1,7 +1,11 @@
-import React from "react";
+import AdminContainer from "@/components/AdminContainer";
 
 const AdminPage = () => {
-  return <div>Admin</div>;
+  return (
+    <div>
+      <AdminContainer />
+    </div>
+  );
 };
 
 export default AdminPage;
