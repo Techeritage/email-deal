@@ -1,13 +1,58 @@
 "use client";
+import React, { useState } from "react";
 import Card from "@/components/Card";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import { saveEmail } from "@/lib/powerhouse";
+import { useToast } from "@/hooks/use-toast";
 
 const HomeContainer = () => {
-  const handleSubmit = () => {};
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!email) {
+      setError("Email is required");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await saveEmail(email);
+      if (res.status === 200) {
+        toast({
+          title: "Thank you! Your submission has been received.",
+        });
+        setLoading(false);
+        setError("");
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Email already exist",
+        });
+        setLoading(false);
+        setError("");
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Something went wrong. Please try again.",
+      });
+      setLoading(false);
+      setError("");
+    }
+  };
+
   return (
-    <div>
-      <Card onClick={handleSubmit} type="email">
+    <form onSubmit={handleSubmit}>
+      {" "}
+      {/* Form submission handler */}
+      <Card type="email" loading={loading}>
         <div>
           <h2 className="md:text-4xl text-2xl font-semibold max-w-[80%] mb-3">
             Unlock 🔓 Exclusive Deals and Updates!
@@ -28,6 +73,8 @@ const HomeContainer = () => {
                 type="email"
                 id="email"
                 placeholder="emmy@gmail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="bg-[#27344D] pl-12 focus:border-[#3371FF] placeholder:text-xs text-xs md:text-sm md:placeholder:text-sm placeholder:font-light placeholder:opacity-70 border-[#2E3D5B] h-[52px] rounded-[8px]"
               />
               <Image
@@ -38,10 +85,15 @@ const HomeContainer = () => {
                 className="absolute top-[50%] translate-y-[-50%] left-3"
               />
             </div>
+            {error && (
+              <p className="text-red-500 text-xs font-light pl-2 md:text-sm">
+                {error}
+              </p>
+            )}
           </div>
         </div>
       </Card>
-    </div>
+    </form>
   );
 };
 
