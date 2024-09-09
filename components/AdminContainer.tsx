@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/input-otp";
 //import { saveotp } from "@/lib/powerhouse";
 import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 const AdminContainer = () => {
   const [otp, setOtp] = useState("");
@@ -17,40 +18,33 @@ const AdminContainer = () => {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
+  const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!otp) {
-      setError("otp is required");
+    // Validate OTP
+    if (!otp || otp.length !== 6) {
+      setError("OTP is required and must be 6 characters.");
       return;
     }
 
-    setLoading(true);
-    /*try {
-      const res = await saveotp(otp);
-      if (res.status === 200) {
-        toast({
-          title: "Thank you! Your submission has been received.",
-        });
+    setLoading(true); // Set loading to true when submitting the form
+    setError(""); // Clear previous errors
+
+    if (otp) {
+      const giveAccess = (process.env.NEXT_PUBLIC_ADMIN_KEY as string) === otp;
+      if (giveAccess) {
         setLoading(false);
-        setError("");
+        toast({
+          title: "Login Succesfull. Redirecting...",
+        });
+        router.push(`/admin/${otp}`);
       } else {
-        toast({
-          variant: "destructive",
-          title: "otp already exist",
-        });
         setLoading(false);
-        setError("");
+        setError("Invalid access code");
       }
-    } catch (error) {
-      console.log(error);
-      toast({
-        variant: "destructive",
-        title: "Something went wrong. Please try again.",
-      });
-      setLoading(false);
-      setError("");
-    }*/
+    }
   };
 
   return (
@@ -66,10 +60,16 @@ const AdminContainer = () => {
             Please enter the OTP to login to the admin dashboard.
           </p>
           <div className="py-10">
-            <InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
+            <InputOTP
+              maxLength={6}
+              pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+              value={otp}
+              onChange={(e) => setOtp(e)}
+            >
               <InputOTPGroup className="min-w-full gap-2 justify-evenly">
                 <InputOTPSlot
                   index={0}
+                  autoFocus
                   className="bg-[#27344D] md:w-14 md:h-14 w-full max-w-14 h-12 text-lg font-semibold border border-[#3371FF] rounded-[8px]"
                 />
                 <InputOTPSlot
@@ -95,7 +95,7 @@ const AdminContainer = () => {
               </InputOTPGroup>
             </InputOTP>
             {error && (
-              <p className="text-red-500 text-xs font-light pl-2 md:text-sm">
+              <p className="text-red-500 mt-1 text-xs font-light pl-2 md:text-sm">
                 {error}
               </p>
             )}

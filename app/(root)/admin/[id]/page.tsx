@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
-const AdminDashboardPage = () => {
+const AdminDashboardPage = ({ params }: { params: { id: string } }) => {
   return (
     <div>
-      dashboard
+      {params.id === process.env.NEXT_PUBLIC_ADMIN_KEY && <div>dashboard</div>}
     </div>
-  )
-}
+  );
+};
 
-export default AdminDashboardPage
+export default AdminDashboardPage;
