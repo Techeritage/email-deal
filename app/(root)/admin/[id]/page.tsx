@@ -12,7 +12,9 @@ const AdminDashboardPage = async ({ params }: { params: { id: string } }) => {
   return (
     <div>
       {params.id === process.env.NEXT_PUBLIC_ADMIN_KEY &&
-        newData?.map((item: any) => <p key={item?._id}>{item?.email}</p>)}
+        newData?.map((item: { _id: string; email: string }) => (
+          <p key={item?._id}>{item?.email}</p>
+        ))}
     </div>
   );
 };
