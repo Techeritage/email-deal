@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
 }
 
 // GET method for retrieving emails from the database
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(res: NextResponse) {
   await connectToDb();
 
   try {

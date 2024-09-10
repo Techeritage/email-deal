@@ -1,11 +1,9 @@
 import { getEmails } from "@/lib/powerhouse";
 
 const AdminDashboardPage = async ({ params }: { params: { id: string } }) => {
-  let data: any;
-  data = await getEmails();
+  const data = await getEmails();
 
-  let newData: any;
-  newData = data?.data;
+  const newData = data?.data;
 
   if (!data || !data.success) {
     return <div>Failed to fetch emails.</div>;
@@ -14,7 +12,7 @@ const AdminDashboardPage = async ({ params }: { params: { id: string } }) => {
   return (
     <div>
       {params.id === process.env.NEXT_PUBLIC_ADMIN_KEY &&
-        newData?.map((item: any) => <p>{item?.email}</p>)}
+        newData?.map((item: any) => <p key={item?._id}>{item?.email}</p>)}
     </div>
   );
 };
