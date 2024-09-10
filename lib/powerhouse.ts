@@ -1,6 +1,6 @@
 export const saveEmail = async (email: string) => {
   try {
-    const res = await fetch("http://localhost:3000/api/email", {
+    const res = await fetch("https://email-deal.vercel.app/api/email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -9,7 +9,16 @@ export const saveEmail = async (email: string) => {
     });
 
     const result = await res.json();
-    console.log(result);
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getEmails = async () => {
+  try {
+    const res = await fetch("https://email-deal.vercel.app/api/email");
+    const result = await res.json();
     return result;
   } catch (error) {
     console.log(error);

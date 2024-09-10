@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     await newEmail.save();
 
     return NextResponse.json({
-      message: "User created successfully",
+      message: "Email saved successfully",
       status: 200,
       success: true,
     });
@@ -49,8 +49,7 @@ export async function POST(req: NextRequest) {
 }
 
 // GET method for retrieving emails from the database
-/*
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest, res: NextResponse) {
   await connectToDb();
 
   try {
@@ -58,20 +57,21 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
     const emails = await Email.find({});
 
     // Return the emails as a response
-    return res.status(200).json({ emails });
+    return NextResponse.json({
+      message: "email fetched successfully",
+      status: 200,
+      success: true,
+      data: emails,
+    });
   } catch (error) {
     // Check if error is an instance of Error, otherwise handle it safely
     if (error instanceof Error) {
-      // Return the error message if available
-      return res
-        .status(500)
-        .json({ message: "Internal server error", error: error.message });
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    // If it's not an instance of Error, return a generic message
-    return res.status(500).json({
-      message: "Internal server error",
-      error: "Unknown error occurred",
-    });
+    return NextResponse.json(
+      { error: "An unexpected error occurred" },
+      { status: 500 }
+    );
   }
-} */
+}
