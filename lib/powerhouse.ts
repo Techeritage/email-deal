@@ -1,6 +1,6 @@
 export const saveEmail = async (email: string) => {
   try {
-    const res = await fetch("https://email-deal.vercel.app/", {
+    const res = await fetch("https://email-deal.vercel.app/api/email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -17,7 +17,7 @@ export const saveEmail = async (email: string) => {
 
 export const getEmails = async () => {
   try {
-    const res = await fetch("https://email-deal.vercel.app/", {
+    const res = await fetch("https://email-deal.vercel.app/api/email", {
       method: "GET",
       cache: "no-store", // Ensures the fetch result is not cached
     });
