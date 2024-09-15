@@ -147,7 +147,9 @@ const AddProduct: React.FC<AddProductProps> = ({ onClose }) => {
 
           {/* File Upload Section */}
           <div className="grid gap-3">
-            <label className="text-sm font-clashmd">Banner image</label>
+            <label className="text-xs md:text-sm font-light pl-2 text-[#B4C6EE]">
+              Banner image
+            </label>
             <div className="relative">
               {/* Loading spinner */}
               {uploading && (
@@ -188,7 +190,7 @@ const AddProduct: React.FC<AddProductProps> = ({ onClose }) => {
                   <img
                     src={imageUrl}
                     alt="Uploaded banner"
-                    className="rounded-[10px] w-full min-h-[255px]"
+                    className="rounded-[10px] w-full max-h-[200px]"
                   />
                 </div>
               ) : (
