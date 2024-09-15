@@ -6,12 +6,14 @@ import Image from "next/image";
 
 import { useToast } from "@/hooks/use-toast";
 import { saveEmail } from "@/lib/powerhouse";
+import { useRouter } from "next/navigation";
 
 const HomeContainer = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,6 +33,7 @@ const HomeContainer = () => {
         setLoading(false);
         setError("");
         setEmail("");
+        router.push("/digiStore");
       } else {
         toast({
           variant: "destructive",

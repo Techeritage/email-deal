@@ -10,7 +10,7 @@ import Link from "next/link";
 const Header = () => {
   return (
     <nav className="py-3 px-[3%] flex items-center justify-between">
-      <h1 className="text-2xl font-semibold">Clif Digi Store</h1>
+      <h1 className="text-2xl font-semibold">Clif DigiStore</h1>
       <Sheet>
         <SheetTrigger asChild>
           <MenuIcon />
