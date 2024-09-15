@@ -35,7 +35,7 @@ const StoreCard = ({
           link={link}
           id={id}
         />
-        <Modal type="delete" />
+        <Modal type="delete" id={id} />
       </div>
     </div>
   );

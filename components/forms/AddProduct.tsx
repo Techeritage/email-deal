@@ -11,7 +11,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { app } from "@/app/utils/firebase";
-import { getItems, saveItem, updateItem } from "@/lib/powerhouse";
+import { getItems, saveItem, updateItem, deleteItem } from "@/lib/powerhouse";
 import { toast } from "@/hooks/use-toast";
 
 const storage = getStorage(app);
@@ -76,19 +76,20 @@ const AddProduct: React.FC<AddProductProps> = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!title || !link || !imageUrl) {
-      setError("All fields are required");
-      return;
-    }
-
+ // Validation check for required fields
+ if (type === "add" || type === "update") {
+  if (!title || !link || !imageUrl) {
+    setError("All fields are required");
+    return;
+  }
+}
     setLoading(true);
     try {
       if (type === "add") {
         const res = await saveItem({ title, link, imageUrl });
         if (res.status === 200) {
           toast({
-            title: "Product saved",
+            title: "Item saved",
           });
           setLoading(false);
           setError("");
@@ -102,7 +103,7 @@ const AddProduct: React.FC<AddProductProps> = ({
         } else {
           toast({
             variant: "destructive",
-            title: "Product already exist",
+            title: "Item already exist",
           });
           setLoading(false);
           setError("");
@@ -113,7 +114,7 @@ const AddProduct: React.FC<AddProductProps> = ({
         const res = await updateItem({ title, link, imageUrl, id });
         if (res.status === 200) {
           toast({
-            title: "Product updated",
+            title: "Item updated",
           });
           await getItems();
           setLoading(false);
@@ -128,7 +129,7 @@ const AddProduct: React.FC<AddProductProps> = ({
         } else {
           toast({
             variant: "destructive",
-            title: "Product already exist",
+            title: "Item already exist",
           });
           setLoading(false);
           setError("");
@@ -136,10 +137,10 @@ const AddProduct: React.FC<AddProductProps> = ({
       }
 
       if (type === "delete") {
-        const res = await updateItem({ title, link, imageUrl, id });
+        const res = await deleteItem({ id });
         if (res.status === 200) {
           toast({
-            title: "Product updated",
+            title: "Item deleted",
           });
           await getItems();
           setLoading(false);
@@ -154,7 +155,7 @@ const AddProduct: React.FC<AddProductProps> = ({
         } else {
           toast({
             variant: "destructive",
-            title: "Product already exist",
+            title: "Item already exist",
           });
           setLoading(false);
           setError("");
@@ -174,6 +175,11 @@ const AddProduct: React.FC<AddProductProps> = ({
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        {type === "delete" && (
+          <p className="text-xl text-center font-medium">
+            Are you sure you want to delete this item?
+          </p>
+        )}
         {(type === "add" || type === "update") && (
           <>
             {error && (

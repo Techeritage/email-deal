@@ -92,7 +92,11 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: "Item not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ message: "Item deleted successfully" });
+    return NextResponse.json({
+      message: "Item deleted successfully",
+      status: 200,
+      success: true,
+    });
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
