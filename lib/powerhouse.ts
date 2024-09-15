@@ -15,6 +15,31 @@ export const saveEmail = async (email: string) => {
   }
 };
 
+export const saveItem = async ({
+  title,
+  link,
+  imageUrl,
+}: {
+  title: string;
+  link: string;
+  imageUrl: string;
+}) => {
+  try {
+    const res = await fetch("http://localhost:3000/api/item", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title, link, imageUrl }),
+    });
+
+    const result = await res.json();
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getEmails = async () => {
   try {
     const res = await fetch("https://email-deal.vercel.app/api/email", {
