@@ -13,6 +13,7 @@ import {
 import { app } from "@/app/utils/firebase";
 import { getItems, saveItem, updateItem, deleteItem } from "@/lib/powerhouse";
 import { toast } from "@/hooks/use-toast";
+import Image from "next/image";
 
 const storage = getStorage(app);
 
@@ -76,13 +77,13 @@ const AddProduct: React.FC<AddProductProps> = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
- // Validation check for required fields
- if (type === "add" || type === "update") {
-  if (!title || !link || !imageUrl) {
-    setError("All fields are required");
-    return;
-  }
-}
+    // Validation check for required fields
+    if (type === "add" || type === "update") {
+      if (!title || !link || !imageUrl) {
+        setError("All fields are required");
+        return;
+      }
+    }
     setLoading(true);
     try {
       if (type === "add") {
@@ -264,8 +265,10 @@ const AddProduct: React.FC<AddProductProps> = ({
                   {/* Uploaded Image Preview */}
                   {imageUrl ? (
                     <div className="relative">
-                      <img
+                      <Image
                         src={imageUrl}
+                        width={400}
+                        height={200}
                         alt="Uploaded banner"
                         className="rounded-[10px] w-full min-h-[150px] max-h-[200px]"
                       />

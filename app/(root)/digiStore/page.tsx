@@ -1,4 +1,4 @@
-import ItemCard from "@/components/ItemCard";
+import ItemCard, { Item } from "@/components/ItemCard";
 import { getItems } from "@/lib/powerhouse";
 
 const DigiStore = async () => {
@@ -9,7 +9,7 @@ const DigiStore = async () => {
         Digistore
       </nav>
       <section className="px-[3%] bg-white grid gap-10 pt-16 py-20">
-        {items?.data?.map((item: any) => (
+        {items?.data?.map((item: Item) => (
           <ItemCard key={item._id} item={item} />
         ))}
       </section>

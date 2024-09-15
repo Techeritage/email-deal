@@ -2,7 +2,8 @@ import { Item } from "@/app/utils/models/Item";
 import Image from "next/image";
 import Link from "next/link";
 
-interface Item {
+export interface Item {
+  _id: string;
   title: string;
   link: string;
   imageUrl: string;
