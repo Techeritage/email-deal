@@ -20,10 +20,11 @@ export async function POST(req: NextRequest) {
     // Optional: Check if the email already exists to prevent duplicates
     const existingEmail = await Email.findOne({ email });
     if (existingEmail) {
-      return NextResponse.json(
-        { error: "Email already exists" },
-        { status: 409 }
-      );
+      return NextResponse.json({
+        message: "Email saved successfully",
+        status: 200,
+        success: true,
+      });
     }
 
     // Save the new email to the database
