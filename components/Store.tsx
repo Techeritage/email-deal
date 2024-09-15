@@ -16,7 +16,7 @@ const Store = ({ products }: { products: product[] }) => {
       </div>
       <div className="py-7 grid gap-7">
         {products?.length > 0 &&
-          products.map((item) => {
+          [...(products ?? [])].reverse().map((item) => {
             const { _id: id, title, link, imageUrl } = item;
             return (
               <StoreCard

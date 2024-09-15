@@ -9,7 +9,7 @@ const DigiStore = async () => {
         Digistore
       </nav>
       <section className="px-[3%] bg-white grid gap-10 pt-16 py-20">
-        {items?.data?.map((item: Item) => (
+        {(items?.data ?? []).reverse().map((item: Item) => (
           <ItemCard key={item._id} item={item} />
         ))}
       </section>
