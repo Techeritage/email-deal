@@ -1,9 +1,10 @@
 import Email from "@/components/Email";
 import Header from "@/components/Header";
 import Store from "@/components/Store";
-import { getEmails } from "@/lib/powerhouse";
+//import { getEmails } from "@/lib/powerhouse";
 
-const AdminDashboardPage = async ({ params }: { params: { id: string } }) => {
+const AdminDashboardPage = async () => {
+  //{ params }: { params: { id: string } }
   //const data = await getEmails();
 
   //const newData = data?.data;
