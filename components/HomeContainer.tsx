@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import Card from "@/components/Card";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { saveEmail } from "@/lib/powerhouse";
+
 import { useToast } from "@/hooks/use-toast";
+import { saveEmail } from "@/lib/powerhouse";
 
 const HomeContainer = () => {
   const [email, setEmail] = useState("");
