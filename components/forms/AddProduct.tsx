@@ -11,19 +11,31 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { app } from "@/app/utils/firebase";
-import { saveItem } from "@/lib/powerhouse";
+import { getItems, saveItem, updateItem } from "@/lib/powerhouse";
 import { toast } from "@/hooks/use-toast";
 
 const storage = getStorage(app);
 
 interface AddProductProps {
   onClose: () => void; // New prop to close dialog
+  type: "add" | "update" | "delete";
+  imageEdit?: string;
+  titleEdit?: string;
+  linkEdit?: string;
+  id?: string;
 }
 
-const AddProduct: React.FC<AddProductProps> = ({ onClose }) => {
-  const [title, setTitle] = useState("");
-  const [link, setLink] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+const AddProduct: React.FC<AddProductProps> = ({
+  onClose,
+  type,
+  imageEdit,
+  titleEdit,
+  linkEdit,
+  id,
+}) => {
+  const [title, setTitle] = useState(titleEdit || "");
+  const [link, setLink] = useState(linkEdit || "");
+  const [imageUrl, setImageUrl] = useState(imageEdit || "");
   const [error, setError] = useState("");
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -72,24 +84,81 @@ const AddProduct: React.FC<AddProductProps> = ({ onClose }) => {
 
     setLoading(true);
     try {
-      const res = await saveItem({ title, link, imageUrl });
-      if (res.status === 200) {
-        toast({
-          title: "Product saved",
-        });
-        setLoading(false);
-        setError("");
-        setTitle("");
-        setLink("");
-        setImageUrl("");
-        onClose(); // Close dialog on success
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Product already exist",
-        });
-        setLoading(false);
-        setError("");
+      if (type === "add") {
+        const res = await saveItem({ title, link, imageUrl });
+        if (res.status === 200) {
+          toast({
+            title: "Product saved",
+          });
+          setLoading(false);
+          setError("");
+          setTitle("");
+          setLink("");
+          setImageUrl("");
+          onClose(); // Close dialog on success
+
+          // Refresh the page
+          window.location.reload();
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Product already exist",
+          });
+          setLoading(false);
+          setError("");
+        }
+      }
+
+      if (type === "update") {
+        const res = await updateItem({ title, link, imageUrl, id });
+        if (res.status === 200) {
+          toast({
+            title: "Product updated",
+          });
+          await getItems();
+          setLoading(false);
+          setError("");
+          setTitle("");
+          setLink("");
+          setImageUrl("");
+          onClose(); // Close dialog on success
+
+          // Refresh the page
+          window.location.reload();
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Product already exist",
+          });
+          setLoading(false);
+          setError("");
+        }
+      }
+
+      if (type === "delete") {
+        const res = await updateItem({ title, link, imageUrl, id });
+        if (res.status === 200) {
+          toast({
+            title: "Product updated",
+          });
+          await getItems();
+          setLoading(false);
+          setError("");
+          setTitle("");
+          setLink("");
+          setImageUrl("");
+          onClose(); // Close dialog on success
+
+          // Refresh the page
+          window.location.reload();
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Product already exist",
+          });
+          setLoading(false);
+          setError("");
+        }
       }
     } catch (error) {
       console.log(error);
@@ -190,7 +259,7 @@ const AddProduct: React.FC<AddProductProps> = ({ onClose }) => {
                   <img
                     src={imageUrl}
                     alt="Uploaded banner"
-                    className="rounded-[10px] w-full max-h-[200px]"
+                    className="rounded-[10px] w-full min-h-[150px] max-h-[200px]"
                   />
                 </div>
               ) : (
@@ -233,7 +302,10 @@ const AddProduct: React.FC<AddProductProps> = ({ onClose }) => {
               <Loader2 />
             </div>
           ) : (
-            <p>Add Item</p>
+            <p>
+              {type === "add" ? "Add" : type === "update" ? "Update" : "Delete"}{" "}
+              Item
+            </p>
           )}
         </Button>
       </form>

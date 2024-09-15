@@ -10,7 +10,10 @@ export async function POST(req: NextRequest) {
     const { title, link, imageUrl } = await req.json();
 
     if (!title || !link || !imageUrl) {
-      return NextResponse.json({ error: "Title, link, and imageUrl are required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Title, link, and imageUrl are required" },
+        { status: 400 }
+      );
     }
 
     const newItem = new Item({ title, link, imageUrl });
@@ -26,7 +29,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
+    return NextResponse.json(
+      { error: "An unexpected error occurred" },
+      { status: 500 }
+    );
   }
 }
 
@@ -48,13 +54,21 @@ export async function GET(req: NextRequest) {
     } else {
       // Fetch all items
       const items = await Item.find({});
-      return NextResponse.json({ items });
+      return NextResponse.json({
+        message: "products fetched successfully",
+        status: 200,
+        success: true,
+        data: items,
+      });
     }
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
-    return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
+    return NextResponse.json(
+      { error: "An unexpected error occurred" },
+      { status: 500 }
+    );
   }
 }
 
@@ -67,7 +81,10 @@ export async function DELETE(req: NextRequest) {
     const id = searchParams.get("id");
 
     if (!id) {
-      return NextResponse.json({ error: "ID is required for deletion" }, { status: 400 });
+      return NextResponse.json(
+        { error: "ID is required for deletion" },
+        { status: 400 }
+      );
     }
 
     const deletedItem = await Item.findByIdAndDelete(id);
@@ -80,7 +97,10 @@ export async function DELETE(req: NextRequest) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
-    return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
+    return NextResponse.json(
+      { error: "An unexpected error occurred" },
+      { status: 500 }
+    );
   }
 }
 
@@ -94,7 +114,10 @@ export async function PUT(req: NextRequest) {
     const id = searchParams.get("id");
 
     if (!id) {
-      return NextResponse.json({ error: "ID is required for updating" }, { status: 400 });
+      return NextResponse.json(
+        { error: "ID is required for updating" },
+        { status: 400 }
+      );
     }
 
     const updatedItem = await Item.findByIdAndUpdate(
@@ -109,12 +132,17 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json({
       message: "Item updated successfully",
-      item: updatedItem,
+      status: 200,
+      success: true,
+      data: updatedItem,
     });
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
-    return NextResponse.json({ error: "An unexpected error occurred" }, { status: 500 });
+    return NextResponse.json(
+      { error: "An unexpected error occurred" },
+      { status: 500 }
+    );
   }
 }
