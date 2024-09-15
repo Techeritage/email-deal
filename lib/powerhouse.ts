@@ -25,7 +25,7 @@ export const saveItem = async ({
   imageUrl: string;
 }) => {
   try {
-    const res = await fetch("http://localhost:3000/api/item", {
+    const res = await fetch("https://email-deal.vercel.app/api/item", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export const updateItem = async ({
   id?: string;
 }) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/item?id=${id}`, {
+    const res = await fetch(`https://email-deal.vercel.app/api/item?id=${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export const updateItem = async ({
 
 export const deleteItem = async ({ id }: { id?: string }) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/item?id=${id}`, {
+    const res = await fetch(`https://email-deal.vercel.app/api/item?id=${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -85,7 +85,7 @@ export const deleteItem = async ({ id }: { id?: string }) => {
 
 export const getEmails = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/email", {
+    const res = await fetch("https://email-deal.vercel.app/api/email", {
       method: "GET",
       cache: "no-store", // Ensures the fetch result is not cached
     });
@@ -98,7 +98,7 @@ export const getEmails = async () => {
 
 export const getItems = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/item", {
+    const res = await fetch("https://email-deal.vercel.app/api/item", {
       method: "GET",
       cache: "no-store", // Ensures the fetch result is not cached
     });
