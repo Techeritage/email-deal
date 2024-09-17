@@ -6,7 +6,7 @@ const DigiStore = async () => {
   return (
     <main className="min-h-screen h-full min-w-full bg-white">
       <nav className="py-3 bg-[#09111f] custom-shadows px-[3%] text-3xl font-semibold border-b">
-        Digistore
+        Tech WonderStore
       </nav>
       <section className="px-[3%] bg-white grid gap-10 pt-16 py-20">
         {(items?.data ?? []).reverse().map((item: Item) => (
